@@ -646,12 +646,11 @@ def available(
             summary_strs = []
             for x in counts_for_gpu_type:
                 node, count = x["node"], x["count"]
-                if count:
-                    occupancy = occupancy_stats_for_node(node)
-                    users = [user for user in usage if node in usage[user].get(key, [])]
-                    details = [f"{key}: {val}" for key, val in sorted(occupancy.items())]
-                    details = f"[{', '.join(details)}] [{','.join(users)}]"
-                    summary_strs.append(f"\n -> {node}: {count} {key} {details}")
+                occupancy = occupancy_stats_for_node(node)
+                users = [user for user in usage if node in usage[user].get(key, [])]
+                details = [f"{key}: {val}" for key, val in sorted(occupancy.items())]
+                details = f"[{', '.join(details)}] [{','.join(users)}]"
+                summary_strs.append(f"\n -> {node}: {count} {key} {details}")
             tail = " ".join(summary_strs)
         print(f"{key}: {gpu_count} available {tail}")
 
